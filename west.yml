@@ -37,6 +37,8 @@ manifest:
       url-base: https://github.com/PelionIoT
     - name: memfault
       url-base: https://github.com/memfault
+    - name: mis1
+      url-base: https://github.com/doublemis1
 
   # If not otherwise specified, the projects below should be obtained
   # from the ncs remote.
@@ -104,7 +106,8 @@ manifest:
     - name: nrfxlib
       repo-path: sdk-nrfxlib
       path: nrfxlib
-      revision: 1a894638c438ce738c101b2c35894c9ffa2beb95
+      remote: mis1
+      revision: update_mpsl_lib
     - name: trusted-firmware-m
       repo-path: sdk-trusted-firmware-m
       path: modules/tee/tfm

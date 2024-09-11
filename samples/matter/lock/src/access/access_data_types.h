@@ -502,16 +502,22 @@ enum CredentialTypeIndex : uint8_t {
 	Fingerprint = static_cast<uint8_t>(CredentialTypeEnum::kFingerprint),
 	FingerVein = static_cast<uint8_t>(CredentialTypeEnum::kFingerVein),
 	Face = static_cast<uint8_t>(CredentialTypeEnum::kFace),
+	// AliroCredentialIssuerKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroCredentialIssuerKey),
+	// AliroEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroEvictableEndpointKey),
+	// AliroNonEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroNonEvictableEndpointKey),
 	Max = Face
 };
 
-using CredentialsBits = uint8_t;
+using CredentialsBits = uint16_t;
 
 static constexpr CredentialsBits PIN = BIT(Pin);
 static constexpr CredentialsBits RFID = BIT(Rfid);
 static constexpr CredentialsBits FINGER = BIT(Fingerprint);
 static constexpr CredentialsBits VEIN = BIT(FingerVein);
 static constexpr CredentialsBits FACE = BIT(Face);
+// static constexpr CredentialsBits ALIRO_ISSUER = BIT(AliroCredentialIssuerKey);
+// static constexpr CredentialsBits ALIRO_EVICTABLE = BIT(AliroEvictableEndpointKey);
+// static constexpr CredentialsBits ALIRO_NON_EVICTABLE = BIT(AliroNonEvictableEndpointKey);
 static constexpr CredentialsBits MAX = BIT(Max);
 
 using CredentialArray = std::array<Credential, CONFIG_LOCK_MAX_NUM_CREDENTIALS_PER_TYPE>;
@@ -590,8 +596,8 @@ public:
 private:
 	static constexpr uint8_t RequestedNumOfCredTypesSupported() { return POPCOUNT(CRED_BIT_MASK); }
 
-	static_assert(CRED_BIT_MASK <= (PIN | RFID | FINGER | VEIN | FACE), "Unsupported credential type.");
-	static_assert(RequestedNumOfCredTypesSupported() <= 5, "Maximum number of credentials exceeded.");
+	static_assert(CRED_BIT_MASK <= (PIN | RFID | FINGER | VEIN | FACE ), "Unsupported credential type.");
+	static_assert(RequestedNumOfCredTypesSupported() <= 8, "Maximum number of credentials exceeded.");
 
 	static constexpr uint8_t sCredentialTypeNumber{ RequestedNumOfCredTypesSupported() };
 

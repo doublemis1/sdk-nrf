@@ -239,6 +239,12 @@ const char *AccessManager<CRED_BIT_MASK>::GetCredentialName(CredentialTypeEnum t
 		return "Finger vein";
 	case CredentialTypeEnum::kFace:
 		return "Face";
+	// case CredentialTypeEnum::kAliroCredentialIssuerKey:
+	// 	return "Aliro credential issuer"
+	// case CredentialTypeEnum::kAliroEvictableEndpointKey:
+	// 	return "Aliro evictable endpoint";
+	// case CredentialTypeEnum::kAliroNonEvictableEndpointKey:
+	// 	return "Aliro non evictable endpoint";
 	default:
 		return "None";
 	}
@@ -281,3 +287,9 @@ template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockDa
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN>;
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
 			     DoorLockData::FACE>;
+// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
+// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER>;
+// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
+// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE>;
+// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
+// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE | DoorLockData::ALIRO_NON_EVICTABLE>;

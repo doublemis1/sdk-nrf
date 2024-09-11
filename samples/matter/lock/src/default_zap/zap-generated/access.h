@@ -52,6 +52,13 @@
     /* Cluster: Door Lock, Attribute: WrongCodeEntryLimit, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: UserCodeTemporaryDisableTime, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: RequirePINforRemoteOperation, Privilege: view */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroReaderVerificationKey, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroReaderGroupIdentifier, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroReaderGroupSubIdentifier, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroExpeditedTransactionSupportedProtocolVersions, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroGroupResolvingKey, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroSupportedBLEUWBProtocolVersions, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Attribute: AliroBLEAdvertisingVersion, Privilege: administer */ \
 }
 
 // Parallel array data (cluster, *attribute*, privilege) for read attribute
@@ -79,6 +86,13 @@
     /* Cluster: Door Lock, Attribute: WrongCodeEntryLimit, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: UserCodeTemporaryDisableTime, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: RequirePINforRemoteOperation, Privilege: view */ \
+    0x00000080, /* Cluster: Door Lock, Attribute: AliroReaderVerificationKey, Privilege: administer */ \
+    0x00000081, /* Cluster: Door Lock, Attribute: AliroReaderGroupIdentifier, Privilege: administer */ \
+    0x00000082, /* Cluster: Door Lock, Attribute: AliroReaderGroupSubIdentifier, Privilege: administer */ \
+    0x00000083, /* Cluster: Door Lock, Attribute: AliroExpeditedTransactionSupportedProtocolVersions, Privilege: administer */ \
+    0x00000084, /* Cluster: Door Lock, Attribute: AliroGroupResolvingKey, Privilege: administer */ \
+    0x00000085, /* Cluster: Door Lock, Attribute: AliroSupportedBLEUWBProtocolVersions, Privilege: administer */ \
+    0x00000086, /* Cluster: Door Lock, Attribute: AliroBLEAdvertisingVersion, Privilege: administer */ \
 }
 
 // Parallel array data (cluster, attribute, *privilege*) for read attribute
@@ -106,6 +120,13 @@
     /* Cluster: Door Lock, Attribute: WrongCodeEntryLimit, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: UserCodeTemporaryDisableTime, Privilege: view */ \
     /* Cluster: Door Lock, Attribute: RequirePINforRemoteOperation, Privilege: view */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroReaderVerificationKey, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroReaderGroupIdentifier, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroReaderGroupSubIdentifier, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroExpeditedTransactionSupportedProtocolVersions, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroGroupResolvingKey, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroSupportedBLEUWBProtocolVersions, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Attribute: AliroBLEAdvertisingVersion, Privilege: administer */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -210,6 +231,8 @@
     0x00000101, /* Cluster: Door Lock, Command: SetCredential, Privilege: administer */ \
     0x00000101, /* Cluster: Door Lock, Command: GetCredentialStatus, Privilege: administer */ \
     0x00000101, /* Cluster: Door Lock, Command: ClearCredential, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Command: SetAliroReaderConfig, Privilege: administer */ \
+    0x00000101, /* Cluster: Door Lock, Command: ClearAliroReaderConfig, Privilege: administer */ \
 }
 
 // Parallel array data (cluster, *command*, privilege) for invoke command
@@ -247,6 +270,8 @@
     0x00000022, /* Cluster: Door Lock, Command: SetCredential, Privilege: administer */ \
     0x00000024, /* Cluster: Door Lock, Command: GetCredentialStatus, Privilege: administer */ \
     0x00000026, /* Cluster: Door Lock, Command: ClearCredential, Privilege: administer */ \
+    0x00000028, /* Cluster: Door Lock, Command: SetAliroReaderConfig, Privilege: administer */ \
+    0x00000029, /* Cluster: Door Lock, Command: ClearAliroReaderConfig, Privilege: administer */ \
 }
 
 // Parallel array data (cluster, command, *privilege*) for invoke command
@@ -284,6 +309,8 @@
     chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Command: SetCredential, Privilege: administer */ \
     chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Command: GetCredentialStatus, Privilege: administer */ \
     chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Command: ClearCredential, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Command: SetAliroReaderConfig, Privilege: administer */ \
+    chip::Access::Privilege::kAdminister, /* Cluster: Door Lock, Command: ClearAliroReaderConfig, Privilege: administer */ \
 }
 
 ////////////////////////////////////////////////////////////////////////////////

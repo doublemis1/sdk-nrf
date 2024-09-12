@@ -97,15 +97,15 @@ bool AccessManager<CRED_BIT_MASK>::DoSetCredential(DoorLockData::Credential &cre
 
 	/* Store to persistent storage */
 	if (0 < serializedSize && 0 < credIndexesSerializedSize) {
-		if (!AccessStorage::Instance().Store(
-			    AccessStorage::Type::Credential, credentialSerialized, serializedSize,
-			    static_cast<CredentialTypeIndex>(credentialType), credentialIndex)) {
+		if (!AccessStorage::Instance().Store(AccessStorage::Type::Credential, credentialSerialized,
+						     serializedSize, static_cast<CredentialTypeIndex>(credentialType),
+						     credentialIndex)) {
 			LOG_ERR("Cannot store given credentials Type: %d Idx: %d",
 				static_cast<uint16_t>(credentialType), credentialIndex);
 		} else {
-			if (!AccessStorage::Instance().Store(
-				    AccessStorage::Type::CredentialsIndexes, credentialIndexesSerialized,
-				    credIndexesSerializedSize, static_cast<CredentialTypeIndex>(credentialType))) {
+			if (!AccessStorage::Instance().Store(AccessStorage::Type::CredentialsIndexes,
+							     credentialIndexesSerialized, credIndexesSerializedSize,
+							     static_cast<CredentialTypeIndex>(credentialType))) {
 				LOG_ERR("Cannot store credentials counter. The persistent database will be corrupted.");
 			}
 		}
@@ -186,8 +186,8 @@ template <CredentialsBits CRED_BIT_MASK> void AccessManager<CRED_BIT_MASK>::Load
 		}
 		outSize = 0;
 		if (!AccessStorage::Instance().Load(AccessStorage::Type::CredentialsIndexes,
-							 credentialIndexesSerialized,
-							 sizeof(credentialIndexesSerialized), outSize, type)) {
+						    credentialIndexesSerialized, sizeof(credentialIndexesSerialized),
+						    outSize, type)) {
 			LOG_INF("No stored indexes for credential of type: %d", type);
 			continue;
 		}
@@ -203,8 +203,7 @@ template <CredentialsBits CRED_BIT_MASK> void AccessManager<CRED_BIT_MASK>::Load
 			uint16_t credentialIndex = credIndexes.mList.mIndexes[idx];
 			outSize = 0;
 			if (!AccessStorage::Instance().Load(AccessStorage::Type::Credential, credentialData,
-								 sizeof(credentialData), outSize, type,
-								 credentialIndex)) {
+							    sizeof(credentialData), outSize, type, credentialIndex)) {
 				LOG_ERR("Cannot load credentials of type %d for index: %d", static_cast<uint8_t>(type),
 					credentialIndex);
 			}
@@ -217,7 +216,7 @@ template <CredentialsBits CRED_BIT_MASK> void AccessManager<CRED_BIT_MASK>::Load
 	}
 	outSize = 0;
 	if (!AccessStorage::Instance().Load(AccessStorage::Type::RequirePIN, &mRequirePINForRemoteOperation,
-						 sizeof(mRequirePINForRemoteOperation), outSize) ||
+					    sizeof(mRequirePINForRemoteOperation), outSize) ||
 	    outSize != sizeof(mRequirePINForRemoteOperation)) {
 		LOG_DBG("Cannot load RequirePINforRemoteOperation");
 	}
@@ -239,12 +238,12 @@ const char *AccessManager<CRED_BIT_MASK>::GetCredentialName(CredentialTypeEnum t
 		return "Finger vein";
 	case CredentialTypeEnum::kFace:
 		return "Face";
-	// case CredentialTypeEnum::kAliroCredentialIssuerKey:
-	// 	return "Aliro credential issuer"
-	// case CredentialTypeEnum::kAliroEvictableEndpointKey:
-	// 	return "Aliro evictable endpoint";
-	// case CredentialTypeEnum::kAliroNonEvictableEndpointKey:
-	// 	return "Aliro non evictable endpoint";
+	case CredentialTypeEnum::kAliroCredentialIssuerKey:
+		return "Aliro credential issuer";
+	case CredentialTypeEnum::kAliroEvictableEndpointKey:
+		return "Aliro evictable endpoint";
+	case CredentialTypeEnum::kAliroNonEvictableEndpointKey:
+		return "Aliro non evictable endpoint";
 	default:
 		return "None";
 	}
@@ -287,9 +286,5 @@ template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockDa
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN>;
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
 			     DoorLockData::FACE>;
-// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
-// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER>;
-// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
-// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE>;
-// template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
-// 			     DoorLockData::FACE | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE | DoorLockData::ALIRO_NON_EVICTABLE>;
+template class AccessManager<DoorLockData::PIN | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE |
+			     DoorLockData::ALIRO_NON_EVICTABLE>;

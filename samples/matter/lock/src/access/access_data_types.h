@@ -9,6 +9,8 @@
 #include <app/clusters/door-lock-server/door-lock-server.h>
 #include <lib/core/ClusterEnums.h>
 
+#include <zephyr/logging/log.h>
+
 namespace DoorLockData
 {
 
@@ -51,7 +53,7 @@ struct Credential {
 	static_assert(sizeof(Info) == 6);
 
 	struct Secret {
-		size_t mDataLength;
+		size_t mDataLength = 0;
 		uint8_t mData[kMaxCredentialLength];
 	};
 
@@ -502,10 +504,10 @@ enum CredentialTypeIndex : uint8_t {
 	Fingerprint = static_cast<uint8_t>(CredentialTypeEnum::kFingerprint),
 	FingerVein = static_cast<uint8_t>(CredentialTypeEnum::kFingerVein),
 	Face = static_cast<uint8_t>(CredentialTypeEnum::kFace),
-	// AliroCredentialIssuerKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroCredentialIssuerKey),
-	// AliroEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroEvictableEndpointKey),
-	// AliroNonEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroNonEvictableEndpointKey),
-	Max = Face
+	AliroCredentialIssuerKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroCredentialIssuerKey),
+	AliroEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroEvictableEndpointKey),
+	AliroNonEvictableEndpointKey = static_cast<uint8_t>(CredentialTypeEnum::kAliroNonEvictableEndpointKey),
+	Max = AliroNonEvictableEndpointKey
 };
 
 using CredentialsBits = uint16_t;
@@ -515,12 +517,25 @@ static constexpr CredentialsBits RFID = BIT(Rfid);
 static constexpr CredentialsBits FINGER = BIT(Fingerprint);
 static constexpr CredentialsBits VEIN = BIT(FingerVein);
 static constexpr CredentialsBits FACE = BIT(Face);
-// static constexpr CredentialsBits ALIRO_ISSUER = BIT(AliroCredentialIssuerKey);
-// static constexpr CredentialsBits ALIRO_EVICTABLE = BIT(AliroEvictableEndpointKey);
-// static constexpr CredentialsBits ALIRO_NON_EVICTABLE = BIT(AliroNonEvictableEndpointKey);
+static constexpr CredentialsBits ALIRO_ISSUER = BIT(AliroCredentialIssuerKey);
+static constexpr CredentialsBits ALIRO_EVICTABLE = BIT(AliroEvictableEndpointKey);
+static constexpr CredentialsBits ALIRO_NON_EVICTABLE = BIT(AliroNonEvictableEndpointKey);
 static constexpr CredentialsBits MAX = BIT(Max);
 
 using CredentialArray = std::array<Credential, CONFIG_LOCK_MAX_NUM_CREDENTIALS_PER_TYPE>;
+
+static int16_t GetBitMaGapsCount(uint16_t bitmask, uint8_t bitNo, uint8_t lsb)
+{
+	int i = bitNo - 1;
+	int cnt = 0;
+	while (i != lsb - 1) {
+		if ((bitmask & (1u << i)) == 0) {
+			cnt++;
+		}
+		i--;
+	}
+	return cnt;
+}
 
 template <CredentialsBits CRED_BIT_MASK> class Credentials {
 public:
@@ -532,8 +547,17 @@ public:
 		CredentialTypeIndex credentialTypeIndex = static_cast<CredentialTypeIndex>(type);
 		if (CRED_BIT_MASK & BIT(credentialTypeIndex)) {
 			success = true;
-			/* The CredentialTypeIndex enumeration starts from 1. */
-			return mCredentials[credentialTypeIndex - 1];
+
+			/* Map credential type index to the array index. */
+			uint16_t idx{};
+			uint8_t lsb = find_lsb_set(CRED_BIT_MASK) - 1; // find_lsb_set starts numbering from 1
+			if (lsb == credentialTypeIndex) {
+				idx = credentialTypeIndex - lsb;
+			} else {
+				uint16_t gaps = GetBitMaGapsCount(CRED_BIT_MASK, credentialTypeIndex, lsb);
+				idx = credentialTypeIndex - lsb - gaps;
+			}
+			return mCredentials[idx];
 		}
 		success = false;
 		return sDummyObj;
@@ -596,7 +620,9 @@ public:
 private:
 	static constexpr uint8_t RequestedNumOfCredTypesSupported() { return POPCOUNT(CRED_BIT_MASK); }
 
-	static_assert(CRED_BIT_MASK <= (PIN | RFID | FINGER | VEIN | FACE ), "Unsupported credential type.");
+	static_assert(CRED_BIT_MASK <= (PIN | RFID | FINGER | VEIN | FACE | ALIRO_ISSUER | ALIRO_EVICTABLE |
+					ALIRO_NON_EVICTABLE),
+		      "Unsupported credential type.");
 	static_assert(RequestedNumOfCredTypesSupported() <= 8, "Maximum number of credentials exceeded.");
 
 	static constexpr uint8_t sCredentialTypeNumber{ RequestedNumOfCredTypesSupported() };

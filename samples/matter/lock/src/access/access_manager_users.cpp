@@ -75,13 +75,13 @@ bool AccessManager<CRED_BIT_MASK>::SetUser(uint16_t userIndex, FabricIndex creat
 
 	/* Store to persistent storage */
 	if (0 < serializedSize && 0 < serializedIndexesSize) {
-		if (!AccessStorage::Instance().Store(AccessStorage::Type::User, userSerialized,
-							  serializedSize, userIndex)) {
+		if (!AccessStorage::Instance().Store(AccessStorage::Type::User, userSerialized, serializedSize,
+						     userIndex)) {
 			LOG_ERR("Cannot store given User Idx: %d", userIndex);
 			return false;
 		} else {
-			if (!AccessStorage::Instance().Store(AccessStorage::Type::UsersIndexes,
-								  userIndexesSerialized, serializedIndexesSize, 0)) {
+			if (!AccessStorage::Instance().Store(AccessStorage::Type::UsersIndexes, userIndexesSerialized,
+							     serializedIndexesSize, 0)) {
 				LOG_ERR("Cannot store users counter. The persistent database will be corrupted.");
 			}
 		}
@@ -104,7 +104,7 @@ template <CredentialsBits CRED_BIT_MASK> void AccessManager<CRED_BIT_MASK>::Load
 	size_t outSize{ 0 };
 
 	if (!AccessStorage::Instance().Load(AccessStorage::Type::UsersIndexes, userIndexesSerialized,
-						 sizeof(userIndexesSerialized), outSize, 0)) {
+					    sizeof(userIndexesSerialized), outSize, 0)) {
 		LOG_INF("No users indexes stored");
 	} else {
 		if (CHIP_NO_ERROR == mUsersIndexes.Deserialize(userIndexesSerialized, outSize)) {
@@ -117,8 +117,8 @@ template <CredentialsBits CRED_BIT_MASK> void AccessManager<CRED_BIT_MASK>::Load
 			/* Read the actual index from the indexList */
 			uint16_t userIndex = mUsersIndexes.mList.mIndexes[idx];
 			outSize = 0;
-			if (AccessStorage::Instance().Load(AccessStorage::Type::User, userData,
-								sizeof(userData), outSize, userIndex)) {
+			if (AccessStorage::Instance().Load(AccessStorage::Type::User, userData, sizeof(userData),
+							   outSize, userIndex)) {
 				if (CHIP_NO_ERROR != mUsers[userIndex - 1].Deserialize(userData, outSize)) {
 					LOG_ERR("Cannot deserialize User index: %d", userIndex);
 				}
@@ -179,3 +179,5 @@ template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockDa
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN>;
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
 			     DoorLockData::FACE>;
+template class AccessManager<DoorLockData::PIN | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE |
+			     DoorLockData::ALIRO_NON_EVICTABLE>;

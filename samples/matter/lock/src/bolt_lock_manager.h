@@ -83,7 +83,8 @@ public:
 	bool GetRequirePIN();
 
 private:
-	using AccessMgr = AccessManager<DoorLockData::PIN>;
+	using AccessMgr = AccessManager<DoorLockData::PIN | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE |
+					DoorLockData::ALIRO_NON_EVICTABLE>;
 	friend class AppTask;
 
 	void SetState(State state, OperationSource source);

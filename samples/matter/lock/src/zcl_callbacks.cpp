@@ -20,6 +20,8 @@ using namespace ::chip::app::Clusters;
 using namespace ::chip::app::Clusters::DoorLock;
 using ::chip::app::DataModel::Nullable;
 
+static DelegateImpl sLockDelegate;
+
 void MatterPostAttributeChangeCallback(const chip::app::ConcreteAttributePath &attributePath, uint8_t type,
 				       uint16_t size, uint8_t *value)
 {
@@ -133,6 +135,8 @@ void emberAfDoorLockClusterInitCallback(EndpointId endpoint)
 										  CONFIG_LOCK_MAX_HOLIDAY_SCHEDULES),
 		     "number of holiday schedules");
 #endif /* CONFIG_LOCK_SCHEDULES */
+
+	DoorLockServer::Instance().SetDelegate(endpoint, &sLockDelegate);
 
 	AppTask::Instance().UpdateClusterState(BoltLockMgr().GetState(),
 					       BoltLockManager::OperationSource::kUnspecified);

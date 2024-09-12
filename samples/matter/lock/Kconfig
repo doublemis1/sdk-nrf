@@ -20,7 +20,7 @@ config LOCK_MAX_NUM_CREDENTIALS_PER_TYPE
 
 config LOCK_MAX_CREDENTIAL_LENGTH
 	int "Maximum length of the single credential supported by the lock"
-	default 10
+	default 65 # it corresponds with the DOOR_LOCK_ALIRO_CREDENTIAL_SIZE
 
 config LOCK_SCHEDULES
 	bool "Support for WeekDay, YearDay and Holiday schedules in lock"

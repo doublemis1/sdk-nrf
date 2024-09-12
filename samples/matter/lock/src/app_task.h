@@ -86,4 +86,5 @@ private:
 	constexpr static Nrf::Matter::TestEventTrigger::EventTriggerId kDoorLockJammedEventTriggerId = 0xFFFF'FFFF'3277'4000;
 	static CHIP_ERROR DoorLockJammedEventCallback(Nrf::Matter::TestEventTrigger::TriggerValue);
 #endif
+	static DelegateImpl sLockDelegate;
 };

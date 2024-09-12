@@ -415,3 +415,5 @@ template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockDa
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN>;
 template class AccessManager<DoorLockData::PIN | DoorLockData::RFID | DoorLockData::FINGER | DoorLockData::VEIN |
 			     DoorLockData::FACE>;
+template class AccessManager<DoorLockData::PIN | DoorLockData::ALIRO_ISSUER | DoorLockData::ALIRO_EVICTABLE |
+			     DoorLockData::ALIRO_NON_EVICTABLE>;

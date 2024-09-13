@@ -151,12 +151,12 @@ uint8_t DelegateImpl::GetAliroBLEAdvertisingVersion()
 
 uint16_t DelegateImpl::GetNumberOfAliroCredentialIssuerKeysSupported()
 {
-	return 2;
+	return 5;
 }
 
 uint16_t DelegateImpl::GetNumberOfAliroEndpointKeysSupported()
 {
-	return 2;
+	return 5;
 }
 
 CHIP_ERROR DelegateImpl::SetAliroReaderConfig(const ByteSpan &signingKey, const ByteSpan &verificationKey,

@@ -528,7 +528,7 @@
 			  ZAP_ATTRIBUTE_MASK(EXTERNAL_STORAGE) }, /* NumberOfAliroCredentialIssuerKeysSupported */                    \
 			{ ZAP_EMPTY_DEFAULT(), 0x00000088, 2, ZAP_TYPE(INT16U),                                                       \
 			  ZAP_ATTRIBUTE_MASK(EXTERNAL_STORAGE) }, /* NumberOfAliroEndpointKeysSupported */                            \
-			{ ZAP_SIMPLE_DEFAULT(0x3181), 0x0000FFFC, 4, ZAP_TYPE(BITMAP32), 0 }, /* FeatureMap */                        \
+			{ ZAP_SIMPLE_DEFAULT(0x6181), 0x0000FFFC, 4, ZAP_TYPE(BITMAP32), 0 }, /* FeatureMap */                        \
 			{ ZAP_SIMPLE_DEFAULT(7), 0x0000FFFD, 2, ZAP_TYPE(INT16U), 0 }, /* ClusterRevision */                          \
 	}
 

@@ -56,7 +56,6 @@ tests:
       - nrf5340dk/nrf5340/cpuapp
       - nrf54l15dk/nrf54l15/cpuapp
       - nrf54lm20dk/nrf54lm20a/cpuapp
-
 sample.matter.window_cover.release.power_consumption.whitepaper_1:
     sysbuild: true
     build_only: true

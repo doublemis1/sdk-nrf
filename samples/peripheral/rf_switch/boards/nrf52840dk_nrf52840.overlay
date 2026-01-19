@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2024 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+/* Disable UART1 (arduino_serial) to free P1.1 and P1.2 for GPIO/PWM use */
+&uart1 {
+	status = "disabled";
+};
+
+/* Configure PWM0 channel 1 for SEL pin (P1.2) - channel 0 is used by LED */
+&pwm0 {
+	status = "okay";
+	pinctrl-0 = <&pwm0_default_sel>;
+	pinctrl-1 = <&pwm0_sleep_sel>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pinctrl {
+	pwm0_default_sel: pwm0_default_sel {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 0, 13)>,
+				<NRF_PSEL(PWM_OUT1, 1, 2)>;
+			nordic,invert;
+		};
+	};
+
+	pwm0_sleep_sel: pwm0_sleep_sel {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 0, 13)>,
+				<NRF_PSEL(PWM_OUT1, 1, 2)>;
+			low-power-enable;
+		};
+	};
+};

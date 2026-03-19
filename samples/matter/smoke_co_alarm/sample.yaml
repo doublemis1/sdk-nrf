@@ -59,6 +59,46 @@ tests:
       - nrf54l15dk/nrf54l15/cpuapp
       - nrf54lm20dk/nrf54lm20a/cpuapp
 
+  sample.matter.smoke_co_alarm.release.power_consumption.tool_8:
+    sysbuild: true
+    build_only: true
+    extra_args:
+      - FILE_SUFFIX=release
+      - CONFIG_NCS_SAMPLE_MATTER_LEDS=n
+      - CONFIG_NCS_SAMPLE_MATTER_WATCHDOG=n
+      - CONFIG_CHIP_ENABLE_PAIRING_AUTOSTART=y
+      - CONFIG_OPENTHREAD_DEFAULT_TX_POWER=8
+    integration_platforms:
+      - nrf52840dk/nrf52840
+      - nrf5340dk/nrf5340/cpuapp
+      - nrf54l15dk/nrf54l15/cpuapp
+      - nrf54lm20dk/nrf54lm20a/cpuapp
+    platform_allow:
+      - nrf52840dk/nrf52840
+      - nrf5340dk/nrf5340/cpuapp
+      - nrf54l15dk/nrf54l15/cpuapp
+      - nrf54lm20dk/nrf54lm20a/cpuapp
+
+  sample.matter.smoke_co_alarm.release.power_consumption.tool_0:
+    sysbuild: true
+    build_only: true
+    extra_args:
+      - FILE_SUFFIX=release
+      - CONFIG_NCS_SAMPLE_MATTER_LEDS=n
+      - CONFIG_NCS_SAMPLE_MATTER_WATCHDOG=n
+      - CONFIG_CHIP_ENABLE_PAIRING_AUTOSTART=y
+      - CONFIG_OPENTHREAD_DEFAULT_TX_POWER=0
+    integration_platforms:
+      - nrf52840dk/nrf52840
+      - nrf5340dk/nrf5340/cpuapp
+      - nrf54l15dk/nrf54l15/cpuapp
+      - nrf54lm20dk/nrf54lm20a/cpuapp
+    platform_allow:
+      - nrf52840dk/nrf52840
+      - nrf5340dk/nrf5340/cpuapp
+      - nrf54l15dk/nrf54l15/cpuapp
+      - nrf54lm20dk/nrf54lm20a/cpuapp
+
   sample.matter.smoke_co_alarm.release.power_consumption.whitepaper_1:
     sysbuild: true
     build_only: true

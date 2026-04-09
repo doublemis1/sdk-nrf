@@ -133,7 +133,7 @@ if OPENTHREAD_COPROCESSOR_RCP
 
 config OPENTHREAD_COPROCESSOR_UART_RING_BUFFER_SIZE
 	int "Set Co-Processor UART ring buffer size"
-	default 2048
+	default 4096
 	help
 	  TX buffer size for the OpenThread Co-Processor UART.
 

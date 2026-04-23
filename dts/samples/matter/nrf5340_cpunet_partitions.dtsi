@@ -2,6 +2,19 @@
  * Copyright (c) 2026 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ *
+ * Fixed partition map for the nRF5340 network core matching the former
+ * Partition Manager layout used by the Matter samples.
+ *
+ * Layout:
+ *   0x00000 - 0x08580  b0n_partition       (netcore secure bootloader, 33.375 KiB)
+ *   0x08580 - 0x08800  provision_partition (b0n provisioning data, 640 B, alias bl_storage)
+ *   0x08800 - 0x40000  s0_partition        (ipc_radio application slot, 222 KiB,
+ *                                           alias slot0_partition / image-0)
+ *
+ * The network core update image is staged in RAM by the application core
+ * (see nrf/modules/mcuboot/flash_sim.overlay) and programmed by the PCD
+ * subsystem, so no secondary slot is required on the network core flash.
  */
 
 /delete-node/ &boot_partition;
@@ -11,19 +24,23 @@
 
 &flash1 {
 	partitions {
-		b0n_partition: partition@1000000 {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		b0n_partition: partition@0 {
 			label = "b0n";
-			reg = <0x1000000 0x8580>;
+			reg = <0x0 0x8580>;
 		};
 
-		bl_storage: provision_partition: partition@1008580 {
+		bl_storage: provision_partition: partition@8580 {
 			label = "b0-provision-data";
-			reg = <0x1008580 0x280>;
+			reg = <0x8580 0x280>;
 		};
 
-		s0_partition: partition@1008800 {
+		slot0_partition: s0_partition: partition@8800 {
 			label = "image-0";
-			reg = <0x1008800 DT_SIZE_K(220)>;
+			reg = <0x8800 0x37800>;
 		};
 	};
 };

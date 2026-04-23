@@ -2,6 +2,10 @@
  * Copyright (c) 2026 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ *
+ * b0n runs from its own partition; the provisioning partition (aliased as
+ * bl_storage) is consumed by nrf/cmake/sysbuild/provision_hex.cmake and the
+ * s0_partition offset is read by nrf/subsys/pcd in mcuboot.
  */
 
 #include <samples/matter/nrf5340_cpunet_partitions.dtsi>

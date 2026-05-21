@@ -225,9 +225,9 @@ manifest:
       groups:
         - libmodem
     - name: openthread
-      repo-path: sdk-openthread
+      url: https://github.com/doublemis1/sdk-openthread
       path: modules/lib/openthread
-      revision: pull/107/head
+      revision: fix_mbedtls_joining
       userdata:
         ncs:
           upstream-url: https://github.com/openthread/openthread
